@@ -2,6 +2,8 @@
 import React from 'react';
 import "../assets/style.css";
 import "../assets/bootstrap.min.css";
+import DemoBanner from "../../demo/DemoBanner";
+import { isDemo, pageUrl } from "../../links";
 
 const Header = () => {
   const logout = async (e) => {
@@ -16,11 +18,11 @@ const Header = () => {
     sessionStorage.removeItem('firstname');
     sessionStorage.removeItem('lastname');
     alert("Logged out " + username);
-    window.location.href = window.location.origin;
+    window.location.href = pageUrl("/");
   };
 
   // Highlight the menu entry of the current page
-  const path = window.location.pathname;
+  const path = isDemo ? (window.location.hash.slice(1) || "/") : window.location.pathname;
   const navClass = (href) => {
     const active = href === "/" ? path === "/" : path.startsWith(href);
     return active ? "nav-link active" : "nav-link";
@@ -37,13 +39,14 @@ const Header = () => {
     </div>
   ) : (
     <div className="input_panel">
-      <a className="homepage_links" href="/login">Login</a>
-      <a className="homepage_links" href="/register">Register</a>
+      <a className="homepage_links" href={pageUrl("/login")}>Login</a>
+      <a className="homepage_links" href={pageUrl("/register")}>Register</a>
     </div>
   );
 
   return (
     <div>
+      <DemoBanner />
       <nav className="navbar navbar-expand-lg navbar-light" style={{ backgroundColor: "darkturquoise", height: "1in" }}>
         <div className="container-fluid">
           <h2 style={{ paddingRight: "5%" }}>Dealerships</h2>
@@ -53,16 +56,16 @@ const Header = () => {
           <div className="collapse navbar-collapse" id="navbarText">
             <ul className="navbar-nav me-auto mb-2 mb-lg-0">
               <li className="nav-item">
-                <a className={navClass("/")} style={{ fontSize: "larger" }} href="/">Home</a>
+                <a className={navClass("/")} style={{ fontSize: "larger" }} href={pageUrl("/")}>Home</a>
               </li>
               <li className="nav-item">
-                <a className={navClass("/dealer")} style={{ fontSize: "larger" }} href="/dealers">Dealers</a>
+                <a className={navClass("/dealer")} style={{ fontSize: "larger" }} href={pageUrl("/dealers")}>Dealers</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" style={{ fontSize: "larger" }} href="/about">About Us</a>
+                <a className="nav-link" style={{ fontSize: "larger" }} href={pageUrl("/about")}>About Us</a>
               </li>
               <li className="nav-item">
-                <a className="nav-link" style={{ fontSize: "larger" }} href="/contact">Contact Us</a>
+                <a className="nav-link" style={{ fontSize: "larger" }} href={pageUrl("/contact")}>Contact Us</a>
               </li>
             </ul>
             <span className="navbar-text">

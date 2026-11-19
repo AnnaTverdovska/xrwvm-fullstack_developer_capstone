@@ -4,6 +4,7 @@ import { useParams } from 'react-router-dom';
 import "./Dealers.css";
 import "../assets/style.css";
 import Header from '../Header/Header';
+import { pageUrl } from '../../links';
 
 const PostReview = () => {
   const [dealer, setDealer] = useState({});
@@ -45,7 +46,7 @@ const PostReview = () => {
       });
       const json = await res.json();
       if (json.status === 200) {
-        window.location.href = window.location.origin + "/dealer/" + id;
+        window.location.href = pageUrl("/dealer/" + id);
       } else if (json.status === 401) {
         setMessage("Please log in to post a review.");
       } else {

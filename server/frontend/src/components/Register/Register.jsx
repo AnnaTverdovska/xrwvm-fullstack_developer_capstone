@@ -4,6 +4,8 @@ import user_icon from "../assets/person.png";
 import email_icon from "../assets/email.png";
 import password_icon from "../assets/password.png";
 import close_icon from "../assets/close.png";
+import DemoBanner from "../../demo/DemoBanner";
+import { pageUrl } from "../../links";
 
 const Register = () => {
   const [userName, setUserName] = useState("");
@@ -14,7 +16,7 @@ const Register = () => {
   const [message, setMessage] = useState("");
 
   const gohome = () => {
-    window.location.href = window.location.origin;
+    window.location.href = pageUrl("/");
   };
 
   const register = async (e) => {
@@ -55,11 +57,13 @@ const Register = () => {
   };
 
   return (
+    <>
+    <DemoBanner />
     <div className="register_container" style={{ width: "50%" }}>
       <div className="header" style={{ display: "flex", flexDirection: "row", justifyContent: "space-between" }}>
         <span className="text" style={{ flexGrow: "1" }}>Sign Up</span>
         <div style={{ display: "flex", flexDirection: "row", justifySelf: "end", alignSelf: "start" }}>
-          <a href="/" onClick={(e) => { e.preventDefault(); gohome(); }} style={{ justifyContent: "space-between", alignItems: "flex-end" }}>
+          <a href={pageUrl("/")} onClick={(e) => { e.preventDefault(); gohome(); }} style={{ justifyContent: "space-between", alignItems: "flex-end" }}>
             <img style={{ width: "1cm" }} src={close_icon} alt="Close" />
           </a>
         </div>
@@ -95,6 +99,7 @@ const Register = () => {
         </div>
       </form>
     </div>
+    </>
   );
 };
 

@@ -4,6 +4,7 @@ import "./Dealers.css";
 import "../assets/style.css";
 import Header from '../Header/Header';
 import review_icon from "../assets/reviewicon.png";
+import { pageUrl } from '../../links';
 
 const Dealers = () => {
   const [dealersList, setDealersList] = useState([]);
@@ -72,13 +73,13 @@ const Dealers = () => {
           {dealersList.map((dealer) => (
             <tr key={dealer.id}>
               <td>{dealer.id}</td>
-              <td><a href={'/dealer/' + dealer.id}>{dealer.full_name}</a></td>
+              <td><a href={pageUrl('/dealer/' + dealer.id)}>{dealer.full_name}</a></td>
               <td>{dealer.city}</td>
               <td>{dealer.address}</td>
               <td>{dealer.zip}</td>
               <td>{dealer.state}</td>
               {isLoggedIn ? (
-                <td><a href={`/postreview/${dealer.id}`}><img src={review_icon} className="review_icon" alt="Post Review" /></a></td>
+                <td><a href={pageUrl(`/postreview/${dealer.id}`)}><img src={review_icon} className="review_icon" alt="Post Review" /></a></td>
               ) : null}
             </tr>
           ))}

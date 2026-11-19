@@ -1,6 +1,5 @@
 // Component tests with the Django API replaced by a fake fetch: `npm test`
-import { render, screen, waitFor, within } from '@testing-library/react';
-import userEvent from '@testing-library/user-event';
+import { fireEvent, render, screen, waitFor, within } from '@testing-library/react';
 import { MemoryRouter, Route, Routes } from 'react-router-dom';
 import Register from './components/Register/Register';
 import Dealers from './components/Dealers/Dealers';
@@ -33,10 +32,10 @@ describe('Register', () => {
     global.fetch = fakeFetch({ '/djangoapp/register': { userName: 'anna', status: 'Authenticated' } });
     render(<Register />);
 
-    userEvent.type(screen.getByLabelText('Username'), 'anna');
-    userEvent.type(screen.getByLabelText('First name'), 'Anna');
-    userEvent.type(screen.getByLabelText('Password'), 's3cret-pass');
-    userEvent.click(screen.getByRole('button', { name: 'Register' }));
+    fireEvent.change(screen.getByLabelText('Username'), { target: { value: 'anna' } });
+    fireEvent.change(screen.getByLabelText('First name'), { target: { value: 'Anna' } });
+    fireEvent.change(screen.getByLabelText('Password'), { target: { value: 's3cret-pass' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Register' }));
 
     await waitFor(() => expect(sessionStorage.getItem('username')).toBe('anna'));
     const body = JSON.parse(global.fetch.mock.calls[0][1].body);
@@ -48,9 +47,9 @@ describe('Register', () => {
     global.fetch = fakeFetch({ '/djangoapp/register': { userName: 'anna', error: 'Already Registered' } });
     render(<Register />);
 
-    userEvent.type(screen.getByLabelText('Username'), 'anna');
-    userEvent.type(screen.getByLabelText('Password'), 'x');
-    userEvent.click(screen.getByRole('button', { name: 'Register' }));
+    fireEvent.change(screen.getByLabelText('Username'), { target: { value: 'anna' } });
+    fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'x' } });
+    fireEvent.click(screen.getByRole('button', { name: 'Register' }));
 
     expect(await screen.findByRole('alert')).toHaveTextContent('That username is taken');
     expect(sessionStorage.getItem('username')).toBeNull();
@@ -59,7 +58,7 @@ describe('Register', () => {
   test('asks for a username and password before calling the server', async () => {
     global.fetch = jest.fn();
     render(<Register />);
-    userEvent.click(screen.getByRole('button', { name: 'Register' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Register' }));
     expect(await screen.findByRole('alert')).toHaveTextContent('Please enter a username and a password');
     expect(global.fetch).not.toHaveBeenCalled();
   });
@@ -76,7 +75,7 @@ describe('Dealers', () => {
     expect(await screen.findByText('Temp Car Dealership')).toBeInTheDocument();
     expect(screen.getAllByRole('row')).toHaveLength(3); // header + 2 dealers
 
-    userEvent.selectOptions(screen.getByLabelText('Filter by state'), 'Texas');
+    fireEvent.change(screen.getByLabelText('Filter by state'), { target: { value: 'Texas' } });
     await waitFor(() => expect(screen.queryByText('Temp Car Dealership')).not.toBeInTheDocument());
     expect(screen.getByText('Holdlamis Car Dealership')).toBeInTheDocument();
   });

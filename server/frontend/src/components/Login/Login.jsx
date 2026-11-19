@@ -1,7 +1,9 @@
+// Modified 2026 by AnnaTverdovska. Original: IBM Skills Network capstone template (Apache License 2.0).
 import React, { useState } from 'react';
 
 import "./Login.css";
 import Header from '../Header/Header';
+import { pageUrl } from '../../links';
 
 const Login = ({ onClose }) => {
 
@@ -36,7 +38,7 @@ const Login = ({ onClose }) => {
 };
 
   if (!open) {
-    window.location.href = "/";
+    window.location.href = pageUrl("/");
   };
   
 
@@ -63,7 +65,7 @@ const Login = ({ onClose }) => {
               <input className="action_button" type="submit" value="Login"/>
               <input className="action_button" type="button" value="Cancel" onClick={()=>setOpen(false)}/>
               </div>
-              <a className="loginlink" href="/register">Register Now</a>
+              <a className="loginlink" href={pageUrl("/register")}>Register Now</a>
           </form>
       </div>
     </div>

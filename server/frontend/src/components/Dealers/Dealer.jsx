@@ -8,6 +8,7 @@ import neutral_icon from "../assets/neutral.png";
 import negative_icon from "../assets/negative.png";
 import review_icon from "../assets/reviewbutton.png";
 import Header from '../Header/Header';
+import { pageUrl } from '../../links';
 
 const senti_icon = (sentiment) =>
   sentiment === "positive" ? positive_icon : sentiment === "negative" ? negative_icon : neutral_icon;
@@ -55,7 +56,7 @@ const Dealer = () => {
     return (
       <div style={{ margin: "20px" }}>
         <Header />
-        <p role="alert" style={{ marginTop: "20px" }}>{error} <a href="/dealers">Back to all dealers</a></p>
+        <p role="alert" style={{ marginTop: "20px" }}>{error} <a href={pageUrl("/dealers")}>Back to all dealers</a></p>
       </div>
     );
   }
@@ -67,7 +68,7 @@ const Dealer = () => {
         <h1 style={{ color: "grey" }}>
           {dealer.full_name}
           {isLoggedIn ? (
-            <a href={`/postreview/${id}`}>
+            <a href={pageUrl(`/postreview/${id}`)}>
               <img src={review_icon} style={{ width: '10%', marginLeft: '10px', marginTop: '10px' }} alt='Post Review' />
             </a>
           ) : null}

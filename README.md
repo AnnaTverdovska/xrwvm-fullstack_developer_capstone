@@ -9,6 +9,11 @@ automatically rated positive, neutral or negative.
 The project started as the capstone of the IBM Full Stack Software Developer certificate,
 built on IBM Skills Network's template.
 
+**[Try the live demo](https://annatverdovska.github.io/xrwvm-fullstack_developer_capstone/)**: the same
+pages running entirely in your browser, with the sample data. Accounts and reviews you add stay
+in your browser, and reviews are rated with the JavaScript version of the same sentiment
+analyzer. See [How the demo works](#how-the-demo-works).
+
 | Dealers, filtered by state | A dealer's reviews with their sentiment |
 |---|---|
 | ![Dealer list](docs/screenshots/dealers.png) | ![Dealer page with reviews](docs/screenshots/dealer.png) |
@@ -76,6 +81,26 @@ Then open <http://localhost:8000>. To edit car makes and models, create an admin
 | `DJANGO_SECRET_KEY`, `DJANGO_DEBUG`, `DJANGO_ALLOWED_HOSTS`, `DJANGO_CSRF_TRUSTED_ORIGINS` | environment | development values; set them for any real deployment |
 | `MONGO_URL`, `PORT` | environment of the dealership API | `mongodb://mongo_db:27017/`, `3030` |
 
+## How the demo works
+
+GitHub Pages can only serve static files, so the demo can't run Django, Express, MongoDB or
+Flask. Instead, `npm run build:demo` in `server/frontend` builds the React app in demo mode
+(`REACT_APP_DEMO=true`):
+
+- `src/demo/demoApi.js` answers the app's `/djangoapp/...` requests in the browser, with the
+  same JSON as the Django views. Dealers and reviews come from `server/database/data`.
+- Accounts (with a hashed password) and new reviews are stored in the visitor's `localStorage`;
+  nothing is sent to a server.
+- Reviews are rated with [vaderSentiment-js](https://github.com/vaderSentiment/vaderSentiment-js),
+  the JavaScript port of the VADER analyzer the Flask service uses, with the same thresholds.
+- The pages use hash routes (`app/#/dealers`), and the Home, About and Contact pages are copied
+  next to the app with their links adjusted.
+- A licenses page lists everything the demo distributes: this project's Apache 2.0 license,
+  vaderSentiment-js (Apache 2.0, with its NOTICE), Bootstrap (MIT) and the app's libraries.
+
+The `Demo site` workflow builds and publishes it on every push to `main`. The demo code is
+loaded separately, so the normal build doesn't include it.
+
 ## Tests
 
 Each part has its own tests, and GitHub Actions runs all of them, plus flake8, on every push:
@@ -84,7 +109,7 @@ Each part has its own tests, and GitHub Actions runs all of them, plus flake8, o
 cd server && python manage.py test djangoapp          # Django views, accounts, cars (17 tests)
 cd server/djangoapp/microservices && pytest           # sentiment service (7 tests)
 cd server/database && npm ci && npm test              # dealership API routes (8 tests)
-cd server/frontend && npm test -- --watchAll=false    # React components (7 tests)
+cd server/frontend && npm test -- --watchAll=false    # React components and demo API (13 tests)
 ```
 
 None of them need the other services running: the calls between services are replaced with
@@ -98,7 +123,7 @@ Apache License 2.0. All changes were made in 2026 by AnnaTverdovska; the commit 
 each one in detail. Changed files that allow comments also say so in their first lines.
 
 <details>
-<summary>Files changed from the template (27)</summary>
+<summary>Files changed from the template (31)</summary>
 
 - `README.md`
 - `server/database/Dockerfile`
@@ -118,12 +143,16 @@ each one in detail. Changed files that allow comments also say so in their first
 - `server/djangoapp/views.py`
 - `server/djangoproj/settings.py`
 - `server/djangoproj/urls.py`
+- `server/frontend/.gitignore`
 - `server/frontend/package-lock.json`
+- `server/frontend/package.json`
 - `server/frontend/src/App.js`
 - `server/frontend/src/components/Dealers/Dealer.jsx`
 - `server/frontend/src/components/Dealers/Dealers.jsx`
 - `server/frontend/src/components/Dealers/PostReview.jsx`
 - `server/frontend/src/components/Header/Header.jsx`
+- `server/frontend/src/components/Login/Login.jsx`
+- `server/frontend/src/index.js`
 - `server/frontend/static/About.html`
 - `server/frontend/static/Home.html`
 - `server/requirements.txt`
@@ -131,10 +160,11 @@ each one in detail. Changed files that allow comments also say so in their first
 </details>
 
 <details>
-<summary>Files added (14, plus the screenshots in docs/)</summary>
+<summary>Files added (20, plus the screenshots in docs/)</summary>
 
 - `.flake8`
 - `.github/workflows/ci.yml`
+- `.github/workflows/demo.yml`
 - `server/database/.gitignore`
 - `server/database/app.test.js`
 - `server/database/package-lock.json`
@@ -143,8 +173,13 @@ each one in detail. Changed files that allow comments also say so in their first
 - `server/djangoapp/migrations/0001_initial.py`
 - `server/djangoapp/migrations/__init__.py`
 - `server/djangoapp/tests.py`
+- `server/frontend/scripts/build-demo-site.js`
 - `server/frontend/src/App.test.js`
 - `server/frontend/src/components/Register/Register.jsx`
+- `server/frontend/src/demo/DemoBanner.jsx`
+- `server/frontend/src/demo/demoApi.js`
+- `server/frontend/src/demo/demoApi.test.js`
+- `server/frontend/src/links.js`
 - `server/frontend/src/setupTests.js`
 - `server/frontend/static/Contact.html`
 
