@@ -18,6 +18,8 @@ services:
       - MONGO_URL=mongodb://mongo_db:27017/
     depends_on:
       - mongo_db
+    # If MongoDB is still starting, the API exits; this starts it again
+    restart: on-failure
 
 volumes:
   mongo_data: {}

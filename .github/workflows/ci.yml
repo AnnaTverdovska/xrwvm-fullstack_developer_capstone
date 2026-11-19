@@ -1,0 +1,59 @@
+name: CI
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+jobs:
+  python:
+    name: Django and sentiment service
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+      - name: Install dependencies
+        run: pip install -r server/requirements.txt -r server/djangoapp/microservices/requirements.txt flake8 pytest
+      - name: Lint Python
+        run: flake8 .
+      - name: Django tests
+        working-directory: server
+        run: python manage.py test djangoapp
+      - name: Sentiment service tests
+        working-directory: server/djangoapp/microservices
+        run: pytest
+
+  api:
+    name: Dealership API
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: server/database
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm ci
+      - run: npm test
+
+  frontend:
+    name: React frontend
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: server/frontend
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+      - run: npm ci
+      - name: Component tests
+        run: npm test -- --watchAll=false
+      - name: Production build
+        # CI=false: the bundled Bootstrap 5.0 CSS triggers a deprecation warning
+        # that the build would otherwise treat as an error
+        run: CI=false npm run build
