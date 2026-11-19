@@ -1,3 +1,4 @@
+# Modified 2026 by AnnaTverdovska. Original: IBM Skills Network capstone template (Apache License 2.0).
 from django.core.validators import MaxValueValidator, MinValueValidator
 from django.db import models
 

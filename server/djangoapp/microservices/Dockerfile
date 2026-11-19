@@ -1,3 +1,4 @@
+# Modified 2026 by AnnaTverdovska. Original: IBM Skills Network capstone template (Apache License 2.0).
 FROM python:3.12-slim-bookworm
 
 WORKDIR /python-docker

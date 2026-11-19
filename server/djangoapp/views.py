@@ -1,3 +1,4 @@
+# Modified 2026 by AnnaTverdovska. Original: IBM Skills Network capstone template (Apache License 2.0).
 """JSON views used by the React frontend. Each response carries a "status"
 field, because the frontend checks that instead of the HTTP status code."""
 import json

@@ -1,3 +1,4 @@
+// Modified 2026 by AnnaTverdovska. Original: IBM Skills Network capstone template (Apache License 2.0).
 const mongoose = require('mongoose');
 
 const Schema = mongoose.Schema;

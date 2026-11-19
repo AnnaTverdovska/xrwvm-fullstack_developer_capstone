@@ -1,3 +1,4 @@
+# Modified 2026 by AnnaTverdovska. Original: IBM Skills Network capstone template (Apache License 2.0).
 from django.conf import settings
 from django.conf.urls.static import static
 from django.urls import path

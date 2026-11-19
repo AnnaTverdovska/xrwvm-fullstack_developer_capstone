@@ -1,3 +1,4 @@
+# Modified 2026 by AnnaTverdovska. Original: IBM Skills Network capstone template (Apache License 2.0).
 """Calls from Django to the two other services: the dealership API
 (Express + MongoDB, part 1) and the sentiment analyzer (Flask, part 2)."""
 import logging

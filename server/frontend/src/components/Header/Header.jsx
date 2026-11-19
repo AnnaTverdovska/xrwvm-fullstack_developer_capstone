@@ -1,3 +1,4 @@
+// Modified 2026 by AnnaTverdovska. Original: IBM Skills Network capstone template (Apache License 2.0).
 import React from 'react';
 import "../assets/style.css";
 import "../assets/bootstrap.min.css";

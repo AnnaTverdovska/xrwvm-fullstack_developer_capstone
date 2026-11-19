@@ -1,3 +1,4 @@
+# Modified 2026 by AnnaTverdovska. Original: IBM Skills Network capstone template (Apache License 2.0).
 from .models import CarMake, CarModel
 
 # Sample car makes and models, loaded the first time the car list is requested

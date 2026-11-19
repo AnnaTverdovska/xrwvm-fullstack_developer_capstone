@@ -90,7 +90,68 @@ cd server/frontend && npm test -- --watchAll=false    # React components (7 test
 None of them need the other services running: the calls between services are replaced with
 fakes in the tests.
 
+## Changes to the IBM template
+
+This repository is a modified version of IBM Skills Network's capstone template
+(`ibm-developer-skills-network/xrwvm-fullstack_developer_capstone`), licensed under the
+Apache License 2.0. All changes were made in 2026 by AnnaTverdovska; the commit history shows
+each one in detail. Changed files that allow comments also say so in their first lines.
+
+<details>
+<summary>Files changed from the template (27)</summary>
+
+- `README.md`
+- `server/database/Dockerfile`
+- `server/database/app.js`
+- `server/database/dealership.js`
+- `server/database/docker-compose.yml`
+- `server/database/package.json`
+- `server/djangoapp/.env`
+- `server/djangoapp/admin.py`
+- `server/djangoapp/microservices/Dockerfile`
+- `server/djangoapp/microservices/app.py`
+- `server/djangoapp/microservices/requirements.txt`
+- `server/djangoapp/models.py`
+- `server/djangoapp/populate.py`
+- `server/djangoapp/restapis.py`
+- `server/djangoapp/urls.py`
+- `server/djangoapp/views.py`
+- `server/djangoproj/settings.py`
+- `server/djangoproj/urls.py`
+- `server/frontend/package-lock.json`
+- `server/frontend/src/App.js`
+- `server/frontend/src/components/Dealers/Dealer.jsx`
+- `server/frontend/src/components/Dealers/Dealers.jsx`
+- `server/frontend/src/components/Dealers/PostReview.jsx`
+- `server/frontend/src/components/Header/Header.jsx`
+- `server/frontend/static/About.html`
+- `server/frontend/static/Home.html`
+- `server/requirements.txt`
+
+</details>
+
+<details>
+<summary>Files added (14, plus the screenshots in docs/)</summary>
+
+- `.flake8`
+- `.github/workflows/ci.yml`
+- `server/database/.gitignore`
+- `server/database/app.test.js`
+- `server/database/package-lock.json`
+- `server/djangoapp/microservices/.gitignore`
+- `server/djangoapp/microservices/test_app.py`
+- `server/djangoapp/migrations/0001_initial.py`
+- `server/djangoapp/migrations/__init__.py`
+- `server/djangoapp/tests.py`
+- `server/frontend/src/App.test.js`
+- `server/frontend/src/components/Register/Register.jsx`
+- `server/frontend/src/setupTests.js`
+- `server/frontend/static/Contact.html`
+
+</details>
+
 ## License
 
-[Apache License 2.0](LICENSE). Original template © IBM Skills Network. "Best Cars" and its staff
-are fictional; the dealer and review data is sample data from the template.
+[Apache License 2.0](LICENSE), the license of the original template: Copyright 2020 IBM
+Developer Skills Network. "Best Cars" and its staff are fictional; the dealer and review data
+is sample data from the template.

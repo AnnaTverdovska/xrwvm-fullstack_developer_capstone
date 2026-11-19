@@ -1,3 +1,4 @@
+# Modified 2026 by AnnaTverdovska. Original: IBM Skills Network capstone template (Apache License 2.0).
 """Sentiment analyzer microservice.
 
 Rates a review text as positive, neutral or negative with NLTK's VADER

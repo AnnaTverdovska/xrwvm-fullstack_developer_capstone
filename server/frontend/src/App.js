@@ -1,3 +1,4 @@
+// Modified 2026 by AnnaTverdovska. Original: IBM Skills Network capstone template (Apache License 2.0).
 import LoginPanel from "./components/Login/Login";
 import Register from "./components/Register/Register";
 import Dealers from "./components/Dealers/Dealers";
