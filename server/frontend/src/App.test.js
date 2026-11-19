@@ -35,7 +35,7 @@ describe('Register', () => {
     fireEvent.change(screen.getByLabelText('Username'), { target: { value: 'anna' } });
     fireEvent.change(screen.getByLabelText('First name'), { target: { value: 'Anna' } });
     fireEvent.change(screen.getByLabelText('Password'), { target: { value: 's3cret-pass' } });
-    fireEvent.click(screen.getByRole('button', { name: 'Register' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Create account' }));
 
     await waitFor(() => expect(sessionStorage.getItem('username')).toBe('anna'));
     const body = JSON.parse(global.fetch.mock.calls[0][1].body);
@@ -49,7 +49,7 @@ describe('Register', () => {
 
     fireEvent.change(screen.getByLabelText('Username'), { target: { value: 'anna' } });
     fireEvent.change(screen.getByLabelText('Password'), { target: { value: 'x' } });
-    fireEvent.click(screen.getByRole('button', { name: 'Register' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Create account' }));
 
     expect(await screen.findByRole('alert')).toHaveTextContent('That username is taken');
     expect(sessionStorage.getItem('username')).toBeNull();
@@ -58,7 +58,7 @@ describe('Register', () => {
   test('asks for a username and password before calling the server', async () => {
     global.fetch = jest.fn();
     render(<Register />);
-    fireEvent.click(screen.getByRole('button', { name: 'Register' }));
+    fireEvent.click(screen.getByRole('button', { name: 'Create account' }));
     expect(await screen.findByRole('alert')).toHaveTextContent('Please enter a username and a password');
     expect(global.fetch).not.toHaveBeenCalled();
   });
@@ -74,18 +74,24 @@ describe('Dealers', () => {
 
     expect(await screen.findByText('Temp Car Dealership')).toBeInTheDocument();
     expect(screen.getAllByRole('row')).toHaveLength(3); // header + 2 dealers
+    expect(screen.getByText('2 dealers in 2 states')).toBeInTheDocument();
 
-    fireEvent.change(screen.getByLabelText('Filter by state'), { target: { value: 'Texas' } });
+    fireEvent.change(screen.getByLabelText('State'), { target: { value: 'Texas' } });
     await waitFor(() => expect(screen.queryByText('Temp Car Dealership')).not.toBeInTheDocument());
     expect(screen.getByText('Holdlamis Car Dealership')).toBeInTheDocument();
+    expect(screen.getByText('1 dealer in Texas')).toBeInTheDocument();
   });
 
-  test('shows the review column only when logged in', async () => {
-    sessionStorage.setItem('username', 'anna');
+  test('shows "Write a review" links only when logged in', async () => {
     global.fetch = fakeFetch({ '/djangoapp/get_dealers': { status: 200, dealers: DEALERS } });
+    const { unmount } = render(<Dealers />);
+    expect(await screen.findByText('Temp Car Dealership')).toBeInTheDocument();
+    expect(screen.queryByText('Write a review')).not.toBeInTheDocument();
+    unmount();
+
+    sessionStorage.setItem('username', 'anna');
     render(<Dealers />);
-    expect(await screen.findByText('Review Dealer')).toBeInTheDocument();
-    expect(await screen.findAllByAltText('Post Review')).toHaveLength(2);
+    expect(await screen.findAllByText('Write a review')).toHaveLength(2);
   });
 });
 
@@ -113,9 +119,11 @@ describe('Dealer', () => {
     renderDealer();
 
     expect(await screen.findByRole('heading', { name: /Temp Car Dealership/ })).toBeInTheDocument();
-    const review = (await screen.findByText('Rude and slow')).closest('.review_panel');
-    expect(within(review).getByAltText('Sentiment: negative')).toBeInTheDocument();
-    expect(screen.getByAltText('Sentiment: positive')).toBeInTheDocument();
+    const review = (await screen.findByText('Rude and slow')).closest('li');
+    expect(within(review).getByText('Negative')).toBeInTheDocument();
+    expect(review).toHaveAttribute('data-sentiment', 'negative');
+    expect(screen.getByText('Positive')).toBeInTheDocument();
+    expect(screen.getByText('2 reviews: 1 positive, 1 negative')).toBeInTheDocument();
   });
 
   test('says so when there are no reviews yet', async () => {

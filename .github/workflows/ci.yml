@@ -53,7 +53,5 @@ jobs:
       - run: npm ci
       - name: Component tests
         run: npm test -- --watchAll=false
-      - name: Production build
-        # CI=false: the bundled Bootstrap 5.0 CSS triggers a deprecation warning
-        # that the build would otherwise treat as an error
-        run: CI=false npm run build
+      - name: Production build (warnings count as errors)
+        run: npm run build

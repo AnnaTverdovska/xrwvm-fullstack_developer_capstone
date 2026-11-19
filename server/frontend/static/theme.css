@@ -1,0 +1,365 @@
+/* Shared look for the whole site, inspired by US highway guide signs:
+   a green sign bar with white lettering, and quiet greys everywhere else.
+   Typeface: Overpass (SIL Open Font License), modelled on the lettering used on those signs. */
+
+:root {
+  --sign-green: #00573f;
+  --sign-green-dark: #003f2e;
+  --sign-white: #ffffff;
+  --asphalt: #22262a;
+  --concrete: #f2f3f1;
+  --line: #d8dcd7;
+  --muted: #5b6268;
+  --focus: #f2b600;
+
+  --positive: #1d6b3f;
+  --positive-bg: #e2f2e7;
+  --neutral: #6b5300;
+  --neutral-bg: #fbf1cf;
+  --negative: #a4231b;
+  --negative-bg: #fbe4e1;
+
+  --font: "Overpass Variable", "Overpass", "Segoe UI", system-ui, sans-serif;
+  --page: 72rem;
+  --radius: 6px;
+}
+
+*,
+*::before,
+*::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--concrete);
+  color: var(--asphalt);
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 1.5;
+}
+
+a { color: var(--sign-green); text-underline-offset: 0.15em; }
+a:hover { color: var(--sign-green-dark); }
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+}
+
+.page {
+  max-width: var(--page);
+  margin: 0 auto;
+  padding: 2rem clamp(1rem, 4vw, 2rem) 4rem;
+}
+
+.page-title {
+  margin: 0;
+  font-size: clamp(1.8rem, 4vw, 2.4rem);
+  font-weight: 800;
+  line-height: 1.15;
+  letter-spacing: -0.01em;
+}
+
+.page-lead {
+  margin: 0.35rem 0 0;
+  color: var(--muted);
+}
+
+/* ---------- Demo note ---------- */
+.demo-note {
+  position: relative;
+  z-index: 10;
+  background: #fff8e1;
+  color: #4a3b00;
+  border-bottom: 1px solid #ecd98f;
+  padding: 0.5rem clamp(1rem, 4vw, 2rem);
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+/* ---------- The sign bar ---------- */
+.signbar {
+  background: var(--sign-green);
+  color: var(--sign-white);
+}
+
+.signbar-inner {
+  max-width: var(--page);
+  margin: 0 auto;
+  padding: 0.75rem clamp(1rem, 4vw, 2rem);
+  display: flex;
+  align-items: center;
+  gap: 2rem;
+}
+
+/* The brand is drawn like a guide sign: rounded panel with an inset white border */
+.brand {
+  display: inline-block;
+  padding: 0.3rem 0.9rem 0.15rem;
+  border: 2px solid var(--sign-white);
+  border-radius: 8px;
+  color: var(--sign-white);
+  font-size: 1.35rem;
+  font-weight: 800;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.brand:hover { color: var(--sign-white); background: var(--sign-green-dark); }
+
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  flex: 1;
+}
+
+.nav-links,
+.nav-account {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.nav-account { margin-left: auto; }
+
+.nav a {
+  color: var(--sign-white);
+  font-weight: 600;
+  text-decoration: none;
+  padding: 0.25rem 0;
+  border-bottom: 2px solid transparent;
+}
+
+.nav a:hover,
+.nav a[aria-current="page"] { border-bottom-color: var(--sign-white); }
+
+.nav-user { opacity: 0.85; }
+
+.menu-button {
+  display: none;
+  margin-left: auto;
+  font: inherit;
+  font-weight: 700;
+  color: var(--sign-white);
+  background: transparent;
+  border: 2px solid var(--sign-white);
+  border-radius: var(--radius);
+  padding: 0.3rem 0.8rem 0.15rem;
+  cursor: pointer;
+}
+
+@media (max-width: 48rem) {
+  .signbar-inner { flex-wrap: wrap; gap: 0.75rem; }
+  .menu-button { display: inline-block; }
+  .nav { display: none; flex-basis: 100%; flex-direction: column; align-items: stretch; gap: 0; }
+  .nav.is-open { display: flex; }
+  .nav-links,
+  .nav-account { flex-direction: column; align-items: stretch; gap: 0; margin: 0; }
+  .nav-account { border-top: 1px solid rgba(255, 255, 255, 0.35); margin-top: 0.25rem; }
+  .nav a,
+  .nav-user { display: block; padding: 0.65rem 0; border-bottom: 0; }
+  .nav a[aria-current="page"] { text-decoration: underline; text-underline-offset: 0.3em; }
+}
+
+/* ---------- Form controls ---------- */
+.field-label {
+  display: block;
+  font-weight: 700;
+  margin-bottom: 0.3rem;
+}
+
+.select,
+.input,
+.textarea {
+  font: inherit;
+  color: var(--asphalt);
+  background: var(--sign-white);
+  border: 1px solid #b9bfb8;
+  border-radius: var(--radius);
+  padding: 0.55rem 0.75rem 0.4rem;
+}
+
+.button {
+  display: inline-block;
+  font: inherit;
+  font-weight: 700;
+  color: var(--sign-white);
+  background: var(--sign-green);
+  border: 0;
+  border-radius: var(--radius);
+  padding: 0.65rem 1.2rem 0.5rem;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.button:hover { background: var(--sign-green-dark); color: var(--sign-white); }
+
+.alert {
+  border-left: 4px solid var(--negative);
+  background: var(--negative-bg);
+  padding: 0.75rem 1rem;
+  margin: 1rem 0;
+}
+
+[hidden] { display: none !important; }
+
+.page.narrow { max-width: 40rem; }
+
+.breadcrumb { margin: 0 0 0.75rem; }
+
+.section-title {
+  margin: 2.5rem 0 0.25rem;
+  font-size: 1.4rem;
+  font-weight: 800;
+}
+
+/* ---------- Forms on their own page (login, register, review) ---------- */
+.form-card {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  background: var(--sign-white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: clamp(1.25rem, 4vw, 2rem);
+}
+
+.form-card .field-label { margin-bottom: 0.3rem; }
+.form-card .input,
+.form-card .select,
+.form-card .textarea { width: 100%; }
+.form-card .textarea { min-height: 9rem; resize: vertical; }
+.form-card .alert { margin: 0; }
+.form-card .button { justify-self: start; }
+
+.field-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  gap: 1rem;
+}
+
+.form-note { margin: 0; color: var(--muted); }
+
+/* ---------- Dealer page and reviews ---------- */
+.dealer-head {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-end;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.review-list {
+  list-style: none;
+  margin: 1rem 0 0;
+  padding: 0;
+  display: grid;
+  gap: 0.75rem;
+}
+
+/* The left edge carries the sentiment colour, the badge says it in words */
+.review-card {
+  background: var(--sign-white);
+  border: 1px solid var(--line);
+  border-left: 5px solid var(--neutral);
+  border-radius: var(--radius);
+  padding: 1rem 1.25rem 0.85rem;
+}
+
+.review-card[data-sentiment="positive"] { border-left-color: var(--positive); }
+.review-card[data-sentiment="negative"] { border-left-color: var(--negative); }
+
+.review-text { margin: 0.5rem 0 0.4rem; font-size: 1.1rem; }
+.review-meta { margin: 0; color: var(--muted); font-size: 0.95rem; }
+
+.badge {
+  display: inline-block;
+  font-size: 0.85rem;
+  font-weight: 700;
+  border-radius: 999px;
+  padding: 0.2rem 0.65rem 0.05rem;
+  color: var(--neutral);
+  background: var(--neutral-bg);
+}
+
+.badge-positive { color: var(--positive); background: var(--positive-bg); }
+.badge-negative { color: var(--negative); background: var(--negative-bg); }
+
+.empty {
+  margin-top: 1rem;
+  background: var(--sign-white);
+  border: 1px dashed #b9bfb8;
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+/* ---------- Home, About and Contact ---------- */
+.hero {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr);
+  gap: clamp(1.5rem, 5vw, 3.5rem);
+  align-items: center;
+}
+
+.hero-title {
+  margin: 0;
+  font-size: clamp(2.2rem, 5.5vw, 3.6rem);
+  font-weight: 800;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+}
+
+.hero-text { font-size: 1.2rem; color: var(--muted); max-width: 32rem; margin: 1rem 0 1.5rem; }
+
+.hero-image {
+  width: 100%;
+  border-radius: var(--radius);
+  display: block;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+}
+
+.team {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.person {
+  background: var(--sign-white);
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  padding: 1.25rem;
+}
+
+.person-initials {
+  display: grid;
+  place-items: center;
+  width: 3rem;
+  height: 3rem;
+  border-radius: 50%;
+  background: var(--sign-green);
+  color: var(--sign-white);
+  font-weight: 800;
+  padding-top: 0.15rem;
+}
+
+.person-name { margin: 0.75rem 0 0; font-weight: 800; font-size: 1.15rem; }
+.person-role { margin: 0; color: var(--muted); }
+.person p { margin-bottom: 0; }
+
+.contact-list { margin: 1.5rem 0 0; display: grid; gap: 1.25rem; }
+.contact-list dt { font-weight: 800; }
+.contact-list dd { margin: 0.2rem 0 0; }
+
+.prose { max-width: 40rem; font-size: 1.1rem; }
+.fiction-note { color: var(--muted); font-size: 0.95rem; margin-top: 2.5rem; }
+
+@media (max-width: 48rem) {
+  .hero { grid-template-columns: 1fr; }
+  .hero-image { order: -1; aspect-ratio: 16 / 9; }
+}

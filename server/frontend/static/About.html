@@ -4,71 +4,63 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>About Us</title>
-  <link rel="stylesheet" href="/static/bootstrap.min.css">
-  <link rel="stylesheet" href="/static/style.css">
+  <title>About us | Best Cars</title>
+  <meta name="description" content="About Best Cars and its team.">
+  <link rel="stylesheet" href="/static/fonts.css">
+  <link rel="stylesheet" href="/static/theme.css">
+  <script src="/static/nav.js" defer></script>
 </head>
 <body>
-  <nav class="navbar navbar-expand-lg navbar-light" style="background-color:darkturquoise; height: 1in;">
-    <div class="container-fluid">
-      <h2 style="padding-right: 5%;">Dealerships</h2>
-      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-      </button>
-      <div class="collapse navbar-collapse" id="navbarText">
-        <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-          <li class="nav-item">
-            <a class="nav-link" style="font-size: larger;" href="/">Home</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" style="font-size: larger;" href="/dealers">Dealers</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link active" aria-current="page" style="font-size: larger;" href="/about">About Us</a>
-          </li>
-          <li class="nav-item">
-            <a class="nav-link" style="font-size: larger;" href="/contact">Contact Us</a>
-          </li>
-        </ul>
+  <header>
+    <div class="signbar">
+      <div class="signbar-inner">
+        <a class="brand" href="/">Best Cars</a>
+        <button type="button" class="menu-button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+        <nav id="site-nav" class="nav" aria-label="Main">
+          <ul class="nav-links">
+            <li><a href="/dealers">Dealers</a></li>
+            <li><a href="/about" aria-current="page">About us</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+          <ul class="nav-account" data-signed-out>
+            <li><a href="/login">Log in</a></li>
+            <li><a href="/register">Register</a></li>
+          </ul>
+          <ul class="nav-account" data-signed-in hidden>
+            <li><span class="nav-user"></span></li>
+            <li><a href="/djangoapp/logout" data-logout>Log out</a></li>
+          </ul>
+        </nav>
       </div>
     </div>
-  </nav>
-
-  <div class="card" style="width: 80%; margin: auto; margin-top: 5%;">
-    <div class="banner" name="about-header">
-      <h1>About Us</h1>
-      Welcome to Best Cars dealership, home to the best cars in North America. We sell domestic and imported cars at reasonable prices.
-    </div>
-    <div style="display: flex; flex-direction: row; justify-content: space-around; width: 100%; padding: 1rem;">
-        <div class="card" style="width: 30%;">
-          <img class="card-img-top" src="/static/person.png" alt="">
-          <div class="card-body">
-            <p class="title">Maria Lopez</p>
-            <p>General Manager</p>
-            <p class="card-text">Maria runs our dealerships and makes sure every visit ends with a car you're happy with.</p>
-            <p>maria.lopez@bestcars.example</p>
-          </div>
-        </div>
-        <div class="card" style="width: 30%;">
-          <img class="card-img-top" src="/static/person.png" alt="">
-          <div class="card-body">
-            <p class="title">James Carter</p>
-            <p>Head of Sales</p>
-            <p class="card-text">James has sold cars for fifteen years and knows every model on our lots.</p>
-            <p>james.carter@bestcars.example</p>
-          </div>
-        </div>
-        <div class="card" style="width: 30%;">
-          <img class="card-img-top" src="/static/person.png" alt="">
-          <div class="card-body">
-            <p class="title">Priya Nair</p>
-            <p>Customer Service Lead</p>
-            <p class="card-text">Priya and her team answer your questions and handle service and warranty requests.</p>
-            <p>priya.nair@bestcars.example</p>
-          </div>
-        </div>
-    </div>
-  </div>
-  <p style="text-align: center; margin: 2rem; color: grey;">Best Cars is a fictional company used for this demo project.</p>
+  </header>
+  <main class="page">
+    <h1 class="page-title">About us</h1>
+    <p class="prose">Best Cars runs dealerships across the United States, selling domestic and imported cars at fair prices. On this site, buyers review the dealer they bought from, so the next customer knows what to expect.</p>
+    <section class="team" aria-label="Our team">
+      <article class="person">
+        <span class="person-initials" aria-hidden="true">ML</span>
+        <p class="person-name">Maria Lopez</p>
+        <p class="person-role">General Manager</p>
+        <p>Maria runs our dealerships and makes sure every visit ends with a car you're happy with.</p>
+        <p><a href="mailto:maria.lopez@bestcars.example">maria.lopez@bestcars.example</a></p>
+      </article>
+      <article class="person">
+        <span class="person-initials" aria-hidden="true">JC</span>
+        <p class="person-name">James Carter</p>
+        <p class="person-role">Head of Sales</p>
+        <p>James has sold cars for fifteen years and knows every model on our lots.</p>
+        <p><a href="mailto:james.carter@bestcars.example">james.carter@bestcars.example</a></p>
+      </article>
+      <article class="person">
+        <span class="person-initials" aria-hidden="true">PN</span>
+        <p class="person-name">Priya Nair</p>
+        <p class="person-role">Customer Service Lead</p>
+        <p>Priya and her team answer your questions and handle service and warranty requests.</p>
+        <p><a href="mailto:priya.nair@bestcars.example">priya.nair@bestcars.example</a></p>
+      </article>
+    </section>
+    <p class="fiction-note">Best Cars and its team are fictional, made up for this demo project.</p>
+  </main>
 </body>
 </html>

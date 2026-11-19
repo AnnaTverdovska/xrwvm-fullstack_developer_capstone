@@ -23,7 +23,7 @@ fs.mkdirSync(path.join(site, "static"), { recursive: true });
 execSync("npx react-scripts build", {
   cwd: frontend,
   stdio: "inherit",
-  env: { ...process.env, REACT_APP_DEMO: "true", PUBLIC_URL: ".", BUILD_PATH: path.join(site, "app"), CI: "false", GENERATE_SOURCEMAP: "false" },
+  env: { ...process.env, REACT_APP_DEMO: "true", PUBLIC_URL: ".", BUILD_PATH: path.join(site, "app"), GENERATE_SOURCEMAP: "false" },
 });
 
 // 2. Sample data, loaded by src/demo/demoApi.js
@@ -34,9 +34,8 @@ for (const file of ["dealerships.json", "reviews.json"]) {
 
 // 3. Static pages with links pointing into the demo, plus the demo banner
 const banner =
-  '<div role="note" style="position:relative;z-index:10;background:#fff3cd;color:#4d3b00;padding:8px 16px;font-size:15px;text-align:center">' +
-  'Demo with sample data: "Best Cars" is fictional, and accounts and reviews you add are saved only in this browser. ' +
-  "The full app runs on Django, Express/MongoDB and a Flask service. " +
+  '<div role="note" class="demo-note">' +
+  'Demo with sample data: "Best Cars" is fictional, and anything you add stays in this browser. ' +
   `<a href="${REPO_URL}">See the code on GitHub</a>. <a href="licenses.html">Licenses</a></div>`;
 
 const rewrites = [
@@ -47,7 +46,6 @@ const rewrites = [
   ['href="/about"', 'href="about.html"'],
   ['href="/contact"', 'href="contact.html"'],
   ['href="/"', 'href="index.html"'],
-  ["window.location.href = window.location.origin;", 'window.location.href = "index.html";'],
 ];
 
 for (const [source, target] of [["Home.html", "index.html"], ["About.html", "about.html"], ["Contact.html", "contact.html"]]) {
@@ -57,9 +55,8 @@ for (const [source, target] of [["Home.html", "index.html"], ["About.html", "abo
   fs.writeFileSync(path.join(site, target), html);
 }
 
-for (const file of fs.readdirSync(staticPages)) {
-  if (!file.endsWith(".html")) fs.copyFileSync(path.join(staticPages, file), path.join(site, "static", file));
-}
+// Styles, fonts, images and the menu script of the static pages
+fs.cpSync(staticPages, path.join(site, "static"), { recursive: true, filter: (src) => !src.endsWith(".html") });
 
 // 4. Licenses of everything the demo distributes
 const legal = path.join(site, "licenses");
@@ -74,24 +71,27 @@ fs.writeFileSync(path.join(site, "licenses.html"), `<!DOCTYPE html>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Licenses</title>
-  <link rel="stylesheet" href="static/bootstrap.min.css">
+  <link rel="stylesheet" href="static/fonts.css">
+  <link rel="stylesheet" href="static/theme.css">
 </head>
-<body style="max-width: 46rem; margin: 2rem auto; padding: 0 1rem;">
-  <h1>Licenses</h1>
+<body>
+<main class="page narrow">
+  <h1 class="page-title">Licenses</h1>
   <p><a href="index.html">Back to the demo</a></p>
-  <h2>This project</h2>
+  <h2 class="section-title">This project</h2>
   <p>Apache License 2.0, Copyright 2020 IBM Developer Skills Network. Based on IBM Skills Network's
     capstone template and modified in 2026 by AnnaTverdovska.
     <a href="licenses/LICENSE-project.txt">License text</a>, <a href="${REPO_URL}">source code</a>.</p>
-  <h2>vaderSentiment-js</h2>
+  <h2 class="section-title">vaderSentiment-js</h2>
   <p>Rates the reviews in this demo. Apache License 2.0, Copyright 2018 Comcast Cable Communications
     Management, LLC. This product includes software developed at Comcast (http://www.comcast.com/).
     <a href="licenses/LICENSE-vader-sentiment.txt">License text</a>, <a href="licenses/NOTICE-vader-sentiment.txt">NOTICE</a>.</p>
-  <h2>Bootstrap 5.0.2</h2>
-  <p>MIT License, Copyright 2011-2021 The Bootstrap Authors and Twitter, Inc. The full notice is at the top of
-    <a href="static/bootstrap.min.css">static/bootstrap.min.css</a>.</p>
-  <h2>React, React Router and other libraries in the app</h2>
+  <h2 class="section-title">Overpass typeface</h2>
+  <p>SIL Open Font License 1.1, Copyright 2021 The Overpass Project Authors.
+    <a href="static/fonts/OFL.txt">License text</a>.</p>
+  <h2 class="section-title">React, React Router and other libraries in the app</h2>
   <p>Their license notices are collected in <a href="app/static/js/${jsLicenses}">app/static/js/${jsLicenses}</a>.</p>
+</main>
 </body>
 </html>
 `);

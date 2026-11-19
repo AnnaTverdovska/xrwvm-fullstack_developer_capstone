@@ -4,80 +4,45 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Dealerships</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-  <link rel="stylesheet" href="/static/style.css">
-  <link rel="stylesheet" href="/static/bootstrap.min.css">
-<script>
-
-const logout = async (e) => {
-  if (e) e.preventDefault();
-  let username = sessionStorage.getItem("username");
-  try {
-    await fetch(window.location.origin + "/djangoapp/logout", { method: "GET" });
-  } catch (error) {
-    // Even if the server can't be reached, forget the user in this browser
-  }
-  sessionStorage.removeItem("username");
-  sessionStorage.removeItem("firstname");
-  sessionStorage.removeItem("lastname");
-  alert("Logged out " + username);
-  window.location.href = window.location.origin;
-};
-
-let checkSession = ()=>{
-  let curr_user = sessionStorage.getItem("username");
-
-  if (curr_user && curr_user !== "") {
-    document.getElementById("loginlogout").innerHTML = 
-    '<span class="homepage_links">' + curr_user +'</span>' +
-    '<a class="homepage_links" onclick="logout(event)" href="/">Logout</a>'
-  } else {
-    document.getElementById("loginlogout").innerHTML = 
-    '<a class="homepage_links" href="/login">Login</a>'+
-    '<a class="homepage_links"  href="/register">Register</a>'
-  }
- }
-</script>
+  <title>Best Cars: find a dealer you can trust</title>
+  <meta name="description" content="Browse car dealers across the US and read buyer reviews, each rated positive, neutral or negative.">
+  <link rel="stylesheet" href="/static/fonts.css">
+  <link rel="stylesheet" href="/static/theme.css">
+  <script src="/static/nav.js" defer></script>
 </head>
-<body onload="checkSession()">
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color:darkturquoise; height: 1in;">
-  <div class="container-fluid">
-    <h2 style="padding-right: 5%;">Dealerships</h2>
-    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="navbarText">
-      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <li class="nav-item">
-          <a class="nav-link active" style="font-size: larger;" aria-current="page" href="/">Home</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" style="font-size: larger;" href="/dealers">Dealers</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" style="font-size: larger;" href="/about">About Us</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" style="font-size: larger;" href="/contact">Contact Us</a>
-        </li>
-      </ul>
-      <span class="navbar-text">
-        <div class="loginlink" id="loginlogout">
-        </div>
-        </span>
+<body>
+  <header>
+    <div class="signbar">
+      <div class="signbar-inner">
+        <a class="brand" href="/">Best Cars</a>
+        <button type="button" class="menu-button" aria-expanded="false" aria-controls="site-nav">Menu</button>
+        <nav id="site-nav" class="nav" aria-label="Main">
+          <ul class="nav-links">
+            <li><a href="/dealers">Dealers</a></li>
+            <li><a href="/about">About us</a></li>
+            <li><a href="/contact">Contact</a></li>
+          </ul>
+          <ul class="nav-account" data-signed-out>
+            <li><a href="/login">Log in</a></li>
+            <li><a href="/register">Register</a></li>
+          </ul>
+          <ul class="nav-account" data-signed-in hidden>
+            <li><span class="nav-user"></span></li>
+            <li><a href="/djangoapp/logout" data-logout>Log out</a></li>
+          </ul>
+        </nav>
+      </div>
     </div>
-  </div>
-</nav>
-<div style="display: flex;flex-direction: column;">
-<div class="card" style="width: 50%;margin-top: 50px;align-self: center;">
-  <img src="/static/car_dealership.jpg" class="card-img-top" alt="Cars lined up at a dealership">
-  <div class="banner">
-    <h5>Welcome to our Dealerships!</h5>
-    <a href="/dealers" class="btn" style="background-color: aqua;margin:10px">View Dealerships</a>
-  </div>
-</div>
-</div>
+  </header>
+  <main class="page">
+    <section class="hero">
+      <div>
+        <h1 class="hero-title">Find a car dealer you can trust</h1>
+        <p class="hero-text">Browse 50 dealers across 21 states and read what buyers say about them. Every review is rated positive, neutral or negative, so you see the mood at a glance.</p>
+        <a class="button" href="/dealers">Find a dealer</a>
+      </div>
+      <img class="hero-image" src="/static/car_dealership.jpg" alt="Cars lined up at a dealership">
+    </section>
+  </main>
 </body>
 </html>

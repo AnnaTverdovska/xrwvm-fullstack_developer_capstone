@@ -1,0 +1,8 @@
+/* Overpass (SIL Open Font License, see fonts/OFL.txt), served from this site */
+@font-face {
+  font-family: "Overpass Variable";
+  font-style: normal;
+  font-display: swap;
+  font-weight: 100 900;
+  src: url("fonts/overpass-latin-wght-normal.woff2") format("woff2-variations");
+}

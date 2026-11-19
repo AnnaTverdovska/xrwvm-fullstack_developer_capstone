@@ -3,6 +3,8 @@ import React from 'react';
 import ReactDOM from 'react-dom/client';
 import App from './App';
 import { BrowserRouter, HashRouter } from "react-router-dom";
+import '@fontsource-variable/overpass';
+import './theme.css';
 
 // The demo on GitHub Pages has no server, so it uses hash routes (#/dealers)
 // and answers the app's API calls in the browser (see src/demo/demoApi.js).

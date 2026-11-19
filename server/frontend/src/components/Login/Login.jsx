@@ -1,74 +1,53 @@
 // Modified 2026 by AnnaTverdovska. Original: IBM Skills Network capstone template (Apache License 2.0).
 import React, { useState } from 'react';
-
-import "./Login.css";
 import Header from '../Header/Header';
 import { pageUrl } from '../../links';
 
-const Login = ({ onClose }) => {
-
+const Login = () => {
   const [userName, setUserName] = useState("");
   const [password, setPassword] = useState("");
-  const [open,setOpen] = useState(true)
-
-  let login_url = window.location.origin+"/djangoapp/login";
+  const [message, setMessage] = useState("");
 
   const login = async (e) => {
     e.preventDefault();
-
-    const res = await fetch(login_url, {
+    setMessage("");
+    try {
+      const res = await fetch(window.location.origin + "/djangoapp/login", {
         method: "POST",
-        headers: {
-            "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-            "userName": userName,
-            "password": password
-        }),
-    });
-    
-    const json = await res.json();
-    if (json.status != null && json.status === "Authenticated") {
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ userName: userName, password: password }),
+      });
+      const json = await res.json();
+      if (json.status === "Authenticated") {
         sessionStorage.setItem('username', json.userName);
-        setOpen(false);        
+        window.location.href = pageUrl("/");
+      } else {
+        setMessage("The username or password is not correct.");
+      }
+    } catch (error) {
+      setMessage("The server can't be reached right now. Please try again later.");
     }
-    else {
-      alert("The user could not be authenticated.")
-    }
-};
-
-  if (!open) {
-    window.location.href = pageUrl("/");
   };
-  
 
   return (
     <div>
-      <Header/>
-    <div onClick={onClose}>
-      <div
-        onClick={(e) => {
-          e.stopPropagation();
-        }}
-        className='modalContainer'
-      >
-          <form className="login_panel" style={{}} onSubmit={login}>
-              <div>
-              <span className="input_field">Username </span>
-              <input type="text"  name="username" placeholder="Username" className="input_field" onChange={(e) => setUserName(e.target.value)}/>
-              </div>
-              <div>
-              <span className="input_field">Password </span>
-              <input name="psw" type="password"  placeholder="Password" className="input_field" onChange={(e) => setPassword(e.target.value)}/>            
-              </div>
-              <div>
-              <input className="action_button" type="submit" value="Login"/>
-              <input className="action_button" type="button" value="Cancel" onClick={()=>setOpen(false)}/>
-              </div>
-              <a className="loginlink" href={pageUrl("/register")}>Register Now</a>
-          </form>
-      </div>
-    </div>
+      <Header />
+      <main className="page narrow">
+        <h1 className="page-title">Log in</h1>
+        <form className="form-card" onSubmit={login}>
+          <div>
+            <label className="field-label" htmlFor="username">Username</label>
+            <input id="username" name="username" className="input" autoComplete="username" onChange={(e) => setUserName(e.target.value)} />
+          </div>
+          <div>
+            <label className="field-label" htmlFor="password">Password</label>
+            <input id="password" name="psw" type="password" className="input" autoComplete="current-password" onChange={(e) => setPassword(e.target.value)} />
+          </div>
+          {message && <p role="alert" className="alert">{message}</p>}
+          <button className="button" type="submit">Log in</button>
+          <p className="form-note">New here? <a href={pageUrl("/register")}>Create an account</a></p>
+        </form>
+      </main>
     </div>
   );
 };

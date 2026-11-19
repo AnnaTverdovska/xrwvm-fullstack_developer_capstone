@@ -1,8 +1,6 @@
 // Modified 2026 by AnnaTverdovska. Original: IBM Skills Network capstone template (Apache License 2.0).
 import React, { useState, useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import "./Dealers.css";
-import "../assets/style.css";
 import Header from '../Header/Header';
 import { pageUrl } from '../../links';
 
@@ -16,8 +14,10 @@ const PostReview = () => {
   const [message, setMessage] = useState("");
 
   const { id } = useParams();
+  const isLoggedIn = sessionStorage.getItem("username") != null;
 
-  const postreview = async () => {
+  const postreview = async (e) => {
+    e.preventDefault();
     let name = sessionStorage.getItem("firstname") + " " + sessionStorage.getItem("lastname");
     // If the first and last name are not stored, use the username
     if (name.includes("null") || !name.trim()) {
@@ -52,7 +52,7 @@ const PostReview = () => {
       } else {
         setMessage(json.message || "The review could not be posted.");
       }
-    } catch (e) {
+    } catch (error) {
       setMessage("The review could not be posted. Please try again later.");
     }
   };
@@ -75,31 +75,44 @@ const PostReview = () => {
   return (
     <div>
       <Header />
-      <div style={{ margin: "5%" }}>
-        <h1 style={{ color: "darkblue" }}>{dealer.full_name}</h1>
-        <textarea id='review' aria-label="Your review" cols='50' rows='7' onChange={(e) => setReview(e.target.value)}></textarea>
-        <div className='input_field'>
-          <label>Purchase Date <input type="date" onChange={(e) => setDate(e.target.value)} /></label>
-        </div>
-        <div className='input_field'>
-          <label>
-            Car Make{' '}
-            <select name="cars" id="cars" defaultValue="" onChange={(e) => setCarIndex(e.target.value)}>
-              <option value="" disabled hidden>Choose Car Make and Model</option>
-              {carmodels.map((carmodel, index) => (
-                <option key={`${carmodel.CarMake}-${carmodel.CarModel}`} value={index}>{carmodel.CarMake} {carmodel.CarModel}</option>
-              ))}
-            </select>
-          </label>
-        </div>
-        <div className='input_field'>
-          <label>Car Year <input type="number" onChange={(e) => setYear(e.target.value)} max={2023} min={2015} /></label>
-        </div>
-        {message && <p role="alert" style={{ color: "darkred" }}>{message}</p>}
-        <div>
-          <button className='postreview' onClick={postreview}>Post Review</button>
-        </div>
-      </div>
+      <main className="page narrow">
+        <p className="breadcrumb"><a href={pageUrl(`/dealer/${id}`)}>Back to {dealer.full_name || "the dealer"}</a></p>
+        <h1 className="page-title">Review {dealer.full_name || "this dealer"}</h1>
+
+        {!isLoggedIn ? (
+          <p className="empty">Please <a href={pageUrl("/login")}>log in</a> to write a review.</p>
+        ) : (
+          <form className="form-card" onSubmit={postreview} onChange={() => setMessage("")} noValidate>
+            <div>
+              <label className="field-label" htmlFor="review">Your review</label>
+              <textarea id="review" className="textarea" onChange={(e) => setReview(e.target.value)}></textarea>
+            </div>
+            <div className="field-row">
+              <div>
+                <label className="field-label" htmlFor="cars">Car</label>
+                <select id="cars" name="cars" className="select" defaultValue="" onChange={(e) => setCarIndex(e.target.value)}>
+                  <option value="" disabled>Choose a make and model</option>
+                  {carmodels.map((carmodel, index) => (
+                    <option key={`${carmodel.CarMake}-${carmodel.CarModel}`} value={index}>{carmodel.CarMake} {carmodel.CarModel}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="field-label" htmlFor="car-year">Car year</label>
+                <input id="car-year" className="input" type="number" min={2015} max={2023} onChange={(e) => setYear(e.target.value)} />
+              </div>
+            </div>
+            <div className="field-row">
+              <div>
+                <label className="field-label" htmlFor="purchase-date">Purchase date</label>
+                <input id="purchase-date" className="input" type="date" onChange={(e) => setDate(e.target.value)} />
+              </div>
+            </div>
+            {message && <p role="alert" className="alert">{message}</p>}
+            <button className="button" type="submit">Post review</button>
+          </form>
+        )}
+      </main>
     </div>
   );
 };

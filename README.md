@@ -22,6 +22,22 @@ analyzer. See [How the demo works](#how-the-demo-works).
 |---|---|
 | ![Home page](docs/screenshots/home.png) | ![Review form](docs/screenshots/post-review.png) |
 
+<img src="docs/screenshots/phone-dealers.png" alt="The dealer list on a phone" width="260" align="right">
+
+### Design
+
+The look borrows from US highway guide signs, since the dealers are spread across the states:
+a green sign bar with white lettering, and quiet greys everywhere else. The typeface is
+[Overpass](https://overpassfont.org/), modelled on the lettering of those signs and served from
+the site itself, so no fonts are loaded from third parties. Every page works on phones: the
+menu folds into a button and the dealer list turns into stacked entries. Reviews show their
+sentiment as a coloured edge and a label in words.
+
+The React pages share `server/frontend/src/theme.css`; the static Home, About and Contact pages
+use an identical copy in `server/frontend/static/theme.css` (a test checks that they match).
+
+<br clear="right">
+
 ## How it fits together
 
 ```mermaid
@@ -109,7 +125,7 @@ Each part has its own tests, and GitHub Actions runs all of them, plus flake8, o
 cd server && python manage.py test djangoapp          # Django views, accounts, cars (17 tests)
 cd server/djangoapp/microservices && pytest           # sentiment service (7 tests)
 cd server/database && npm ci && npm test              # dealership API routes (8 tests)
-cd server/frontend && npm test -- --watchAll=false    # React components and demo API (13 tests)
+cd server/frontend && npm test -- --watchAll=false    # React components, demo API, theme copy (14 tests)
 ```
 
 None of them need the other services running: the calls between services are replaced with
@@ -160,7 +176,7 @@ each one in detail. Changed files that allow comments also say so in their first
 </details>
 
 <details>
-<summary>Files added (20, plus the screenshots in docs/)</summary>
+<summary>Files added (28, plus the screenshots in docs/)</summary>
 
 - `.flake8`
 - `.github/workflows/ci.yml`
@@ -175,18 +191,56 @@ each one in detail. Changed files that allow comments also say so in their first
 - `server/djangoapp/tests.py`
 - `server/frontend/scripts/build-demo-site.js`
 - `server/frontend/src/App.test.js`
+- `server/frontend/src/components/Dealers/DealerList.css`
 - `server/frontend/src/components/Register/Register.jsx`
 - `server/frontend/src/demo/DemoBanner.jsx`
 - `server/frontend/src/demo/demoApi.js`
 - `server/frontend/src/demo/demoApi.test.js`
 - `server/frontend/src/links.js`
 - `server/frontend/src/setupTests.js`
+- `server/frontend/src/theme.css`
+- `server/frontend/src/theme.test.js`
 - `server/frontend/static/Contact.html`
+- `server/frontend/static/fonts.css`
+- `server/frontend/static/fonts/OFL.txt`
+- `server/frontend/static/fonts/overpass-latin-wght-normal.woff2`
+- `server/frontend/static/nav.js`
+- `server/frontend/static/theme.css`
+
+</details>
+
+<details>
+<summary>Files removed (21)</summary>
+
+The template's Bootstrap copies, old stylesheets and icon images, replaced by the new design:
+
+- `confirm.png`
+- `server/frontend/src/components/Dealers/Dealers.css`
+- `server/frontend/src/components/Login/Login.css`
+- `server/frontend/src/components/Register/Register.css`
+- `server/frontend/src/components/assets/bootstrap.min.css`
+- `server/frontend/src/components/assets/close.png`
+- `server/frontend/src/components/assets/email.png`
+- `server/frontend/src/components/assets/negative.png`
+- `server/frontend/src/components/assets/neutral.png`
+- `server/frontend/src/components/assets/password`
+- `server/frontend/src/components/assets/password.png`
+- `server/frontend/src/components/assets/person.png`
+- `server/frontend/src/components/assets/positive.png`
+- `server/frontend/src/components/assets/reviewbutton.png`
+- `server/frontend/src/components/assets/reviewicon.png`
+- `server/frontend/src/components/assets/style.css`
+- `server/frontend/static/bootstrap.min.css`
+- `server/frontend/static/cars.jpeg`
+- `server/frontend/static/contactus.png`
+- `server/frontend/static/person.png`
+- `server/frontend/static/style.css`
 
 </details>
 
 ## License
 
 [Apache License 2.0](LICENSE), the license of the original template: Copyright 2020 IBM
-Developer Skills Network. "Best Cars" and its staff are fictional; the dealer and review data
+Developer Skills Network. The Overpass typeface is included under the SIL Open Font License
+([`server/frontend/static/fonts/OFL.txt`](server/frontend/static/fonts/OFL.txt)). "Best Cars" and its staff are fictional; the dealer and review data
 is sample data from the template.
