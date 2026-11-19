@@ -176,7 +176,7 @@ each one in detail. Changed files that allow comments also say so in their first
 </details>
 
 <details>
-<summary>Files added (28, plus the screenshots in docs/)</summary>
+<summary>Files added (29, plus the screenshots in docs/)</summary>
 
 - `.flake8`
 - `.github/workflows/ci.yml`
@@ -205,14 +205,15 @@ each one in detail. Changed files that allow comments also say so in their first
 - `server/frontend/static/fonts/OFL.txt`
 - `server/frontend/static/fonts/overpass-latin-wght-normal.woff2`
 - `server/frontend/static/nav.js`
+- `server/frontend/static/rows-of-cars.jpg`
 - `server/frontend/static/theme.css`
 
 </details>
 
 <details>
-<summary>Files removed (21)</summary>
+<summary>Files removed (22)</summary>
 
-The template's Bootstrap copies, old stylesheets and icon images, replaced by the new design:
+The template's Bootstrap copies, old stylesheets and images, replaced by the new design:
 
 - `confirm.png`
 - `server/frontend/src/components/Dealers/Dealers.css`
@@ -231,6 +232,7 @@ The template's Bootstrap copies, old stylesheets and icon images, replaced by th
 - `server/frontend/src/components/assets/reviewicon.png`
 - `server/frontend/src/components/assets/style.css`
 - `server/frontend/static/bootstrap.min.css`
+- `server/frontend/static/car_dealership.jpg`
 - `server/frontend/static/cars.jpeg`
 - `server/frontend/static/contactus.png`
 - `server/frontend/static/person.png`
@@ -244,3 +246,9 @@ The template's Bootstrap copies, old stylesheets and icon images, replaced by th
 Developer Skills Network. The Overpass typeface is included under the SIL Open Font License
 ([`server/frontend/static/fonts/OFL.txt`](server/frontend/static/fonts/OFL.txt)). "Best Cars" and its staff are fictional; the dealer and review data
 is sample data from the template.
+
+The home page photo, [`server/frontend/static/rows-of-cars.jpg`](server/frontend/static/rows-of-cars.jpg), is
+"Rows of new cars parked in a large lot" by [Rob Dean](https://unsplash.com/@robhdean) on
+[Unsplash](https://unsplash.com/photos/rows-of-new-cars-parked-in-a-large-lot-1h491Giz9CU), used under the
+[Unsplash License](https://unsplash.com/license) and resized for the web. It replaces the template's
+`car_dealership.jpg`, whose source and license could not be confirmed.

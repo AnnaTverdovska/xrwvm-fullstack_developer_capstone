@@ -89,6 +89,10 @@ fs.writeFileSync(path.join(site, "licenses.html"), `<!DOCTYPE html>
   <h2 class="section-title">Overpass typeface</h2>
   <p>SIL Open Font License 1.1, Copyright 2021 The Overpass Project Authors.
     <a href="static/fonts/OFL.txt">License text</a>.</p>
+  <h2 class="section-title">Home page photo</h2>
+  <p>"Rows of new cars parked in a large lot" by <a href="https://unsplash.com/@robhdean">Rob Dean</a>,
+    from <a href="https://unsplash.com/photos/rows-of-new-cars-parked-in-a-large-lot-1h491Giz9CU">Unsplash</a>,
+    used under the <a href="https://unsplash.com/license">Unsplash License</a>. Resized for the web.</p>
   <h2 class="section-title">React, React Router and other libraries in the app</h2>
   <p>Their license notices are collected in <a href="app/static/js/${jsLicenses}">app/static/js/${jsLicenses}</a>.</p>
 </main>

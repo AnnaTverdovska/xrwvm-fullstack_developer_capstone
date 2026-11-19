@@ -314,13 +314,19 @@ a:hover { color: var(--sign-green-dark); }
 
 .hero-text { font-size: 1.2rem; color: var(--muted); max-width: 32rem; margin: 1rem 0 1.5rem; }
 
+.hero-figure { margin: 0; }
+
 .hero-image {
   width: 100%;
+  height: auto;
   border-radius: var(--radius);
   display: block;
   aspect-ratio: 4 / 3;
   object-fit: cover;
 }
+
+.photo-credit { margin-top: 0.5rem; font-size: 0.85rem; color: var(--muted); }
+.photo-credit a { color: inherit; }
 
 .team {
   display: grid;
@@ -361,5 +367,6 @@ a:hover { color: var(--sign-green-dark); }
 
 @media (max-width: 48rem) {
   .hero { grid-template-columns: 1fr; }
-  .hero-image { order: -1; aspect-ratio: 16 / 9; }
+  .hero-figure { order: -1; }
+  .hero-image { aspect-ratio: 16 / 9; }
 }
