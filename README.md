@@ -112,7 +112,8 @@ Flask. Instead, `npm run build:demo` in `server/frontend` builds the React app i
 - The pages use hash routes (`app/#/dealers`), and the Home, About and Contact pages are copied
   next to the app with their links adjusted.
 - A licenses page lists everything the demo distributes: this project's Apache 2.0 license,
-  vaderSentiment-js (Apache 2.0, with its NOTICE), Bootstrap (MIT) and the app's libraries.
+  vaderSentiment-js (Apache 2.0, with its NOTICE), the Overpass typeface (SIL OFL), the home page
+  photo (Unsplash License) and the libraries bundled into the app.
 
 The `Demo site` workflow builds and publishes it on every push to `main`. The demo code is
 loaded separately, so the normal build doesn't include it.
@@ -176,7 +177,7 @@ each one in detail. Changed files that allow comments also say so in their first
 </details>
 
 <details>
-<summary>Files added (29, plus the screenshots in docs/)</summary>
+<summary>Files added (30, plus the screenshots in docs/)</summary>
 
 - `.flake8`
 - `.github/workflows/ci.yml`
@@ -185,6 +186,7 @@ each one in detail. Changed files that allow comments also say so in their first
 - `server/database/app.test.js`
 - `server/database/package-lock.json`
 - `server/djangoapp/microservices/.gitignore`
+- `server/djangoapp/microservices/sentiment/VADER-LICENSE.txt`
 - `server/djangoapp/microservices/test_app.py`
 - `server/djangoapp/migrations/0001_initial.py`
 - `server/djangoapp/migrations/__init__.py`
@@ -252,3 +254,7 @@ The home page photo, [`server/frontend/static/rows-of-cars.jpg`](server/frontend
 [Unsplash](https://unsplash.com/photos/rows-of-new-cars-parked-in-a-large-lot-1h491Giz9CU), used under the
 [Unsplash License](https://unsplash.com/license) and resized for the web. It replaces the template's
 `car_dealership.jpg`, whose source and license could not be confirmed.
+
+The sentiment service uses the VADER lexicon by C.J. Hutto and Eric Gilbert
+(`server/djangoapp/microservices/sentiment/vader_lexicon.zip`, included in IBM's template), under
+the MIT License: see [`VADER-LICENSE.txt`](server/djangoapp/microservices/sentiment/VADER-LICENSE.txt).
